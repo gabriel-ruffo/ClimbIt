@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Climb It!</string>
+
+    <!-- Strings for search functionality on main screen -->
+    <string name="search_hint">Search by...</string>
+    <string name="search_button">Search</string>
+    <string name="name_radio">Name</string>
+    <string name="grade_radio">Grade</string>
+    <string name="rating_radio">Rating</string>
+    <string name="setter_radio">Setter</string>
+
+    <!-- Strings for adding a route screen -->
+    <string name="add_route_header">Add a new route!</string>
+    <string name="add_route_button">Add New Route</string>
+    <string name="picture_tab">Picture:</string>
+    <string name="upload_pic_button">Upload Picture</string>
+    <string name="name_tab">Name:</string>
+    <string name="grade_tab">Grade:</string>
+    <string name="setter_tab">Setter:</string>
+    <string name="start_date_tab">Start Date:</string>
+    <string name="finish_date_tab">Finish Date:</string>
+    <string name="rating_tab">Rating:</string>
+    <string name="felt_life_tab">Felt Like:</string>
+    <string name="location_tab">Location:</string>
+    <string name="submit_button">Submit</string>
+
+    <!-- Strings for details screen -->
+    <string name="details_header">More Details...</string>
+    <string name="edit_button">Edit</string>
+
+    <!-- Strings for edit route screen -->
+    <string name="edit_header">Edit Route</string>
+    <string name="update_button">Update</string>
+    <string name="route_name">Route name</string>
+    <string name="grading_system">V# or 5.##[A-C]</string>
+    <string name="setter_hint">Who set this route?</string>
+    <string name="date_hint">MM/DD/YY</string>
+    <string name="feel_like_hint">What grade does it feel like?</string>
+    <string name="location_hint">Gym or outside location</string>
+</resources>

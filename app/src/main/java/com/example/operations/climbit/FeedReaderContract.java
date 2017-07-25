@@ -8,23 +8,23 @@ import android.provider.BaseColumns;
 
 /**
  * @version 1.0
- * Created by Operations on 7/24/2017.
+ *          Created by Operations on 7/24/2017.
  */
 
-public final class FeedReaderContract {
+final class FeedReaderContract {
     private FeedReaderContract() {
     }
 
-    public static class FeedEntry implements BaseColumns {
-        public static final String TABLE_NAME = "Route";
-        public static final String COLUMN_NAME_NAME = "name";
-        public static final String COLUMN_NAME_GRADE = "grade";
-        public static final String COLUMN_NAME_SETTER = "setter";
-        public static final String COLUMN_NAME_START = "start";
-        public static final String COLUMN_NAME_FINISH = "finish";
-        public static final String COLUMN_NAME_RATING = "rating";
-        public static final String COLUMN_NAME_FELT_LIKE = "felt_like";
-        public static final String COLUMN_NAME_LOCATION = "location";
+    static class FeedEntry implements BaseColumns {
+        static final String TABLE_NAME = "Route";
+        static final String COLUMN_NAME_NAME = "name";
+        static final String COLUMN_NAME_GRADE = "grade";
+        static final String COLUMN_NAME_SETTER = "setter";
+        static final String COLUMN_NAME_START = "start";
+        static final String COLUMN_NAME_FINISH = "finish";
+        static final String COLUMN_NAME_RATING = "rating";
+        static final String COLUMN_NAME_FELT_LIKE = "felt_like";
+        static final String COLUMN_NAME_LOCATION = "location";
     }
 
     private static final String SQL_CREATE_ENTRIES =
@@ -42,13 +42,13 @@ public final class FeedReaderContract {
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
 
-    public static class FeedReaderDbHelper extends SQLiteOpenHelper {
+    static class FeedReaderDbHelper extends SQLiteOpenHelper {
         // If you change the database schema, you must increment the database version.
         public static final int DATABASE_VERSION = 1;
         public static final String DATABASE_NAME = "ClimbIt.db";
         public final SQLiteDatabase db_writer = this.getWritableDatabase();
 
-        public FeedReaderDbHelper(Context context) {
+        FeedReaderDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
@@ -79,10 +79,10 @@ public final class FeedReaderContract {
          * @param rating    Rating field of a Route.
          * @param felt_like Felt Like field of a Route.
          * @param location  Location field of a Route.
-         * @return
+         * @return The result code of the insert transaction.
          */
-        public long insertNewRoute(String name, String grade, String setter, String start,
-                                   String finish, float rating, String felt_like, String location) {
+        long insertNewRoute(String name, String grade, String setter, String start,
+                            String finish, float rating, String felt_like, String location) {
             ContentValues values = new ContentValues();
             values.put(FeedEntry.COLUMN_NAME_NAME, name);
             values.put(FeedEntry.COLUMN_NAME_GRADE, grade);

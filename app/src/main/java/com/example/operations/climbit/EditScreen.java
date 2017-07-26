@@ -2,9 +2,11 @@ package com.example.operations.climbit;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -203,5 +205,46 @@ public class EditScreen extends AppCompatActivity {
         temp.put(FeedReaderContract.FeedEntry.COLUMN_NAME_LOCATION, location.getText().toString());
 
         return temp;
+    }
+
+    public void deleteRoute(View view) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        // Yes button clicked
+                        Intent intent = new Intent(EditScreen.this, MainScreen.class);
+                        deleteRouteFromDB();
+                        startActivity(intent);
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setMessage("Are you sure you want to delete this Route?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
+    private void deleteRouteFromDB() {
+        SQLiteDatabase db_writer = mDbHelper.getWritableDatabase();
+        String selection = FeedReaderContract.FeedEntry.COLUMN_NAME_NAME + " = ? AND " +
+                FeedReaderContract.FeedEntry.COLUMN_NAME_GRADE + " = ? AND " +
+                FeedReaderContract.FeedEntry.COLUMN_NAME_SETTER + " = ? AND " +
+                FeedReaderContract.FeedEntry.COLUMN_NAME_START + " = ? AND " +
+                FeedReaderContract.FeedEntry.COLUMN_NAME_FINISH + " = ? AND " +
+                FeedReaderContract.FeedEntry.COLUMN_NAME_RATING + " = ? AND " +
+                FeedReaderContract.FeedEntry.COLUMN_NAME_FELT_LIKE + " = ? AND " +
+                FeedReaderContract.FeedEntry.COLUMN_NAME_LOCATION + " = ?";
+
+        String[] selectionArgs = {route_vals[0], route_vals[1], route_vals[2],
+                route_vals[3], route_vals[4], route_vals[5],
+                route_vals[6], route_vals[7]};
+
+        db_writer.delete(FeedReaderContract.FeedEntry.TABLE_NAME, selection, selectionArgs);
     }
 }

@@ -20,8 +20,6 @@ import java.util.List;
  * it from the MainScreen.
  *
  * @author Gabriel Ruffo
- * @version 1.4
- * @since 07/25/2017
  */
 public class SearchScreen extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.ClimbIt.MESSAGE";

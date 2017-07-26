@@ -25,8 +25,6 @@ import java.util.Locale;
  * a Route, and allows the user to make changes/delete fields.
  *
  * @author Gabriel Ruffo
- * @version 1.6
- * @since 07/25/2017
  */
 public class EditScreen extends AppCompatActivity {
     // route_vals[8] = route #

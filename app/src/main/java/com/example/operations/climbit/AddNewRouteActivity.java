@@ -29,8 +29,6 @@ import java.util.Locale;
  * format view, allowing the user to enter all information pertaining to a route.
  *
  * @author Gabriel Ruffo
- * @version 1.7
- * @since 07/25/2017
  */
 public class AddNewRouteActivity extends AppCompatActivity {
     private final Calendar calendar = Calendar.getInstance();

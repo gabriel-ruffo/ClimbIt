@@ -8,8 +8,6 @@ import java.io.Serializable;
  * rock climbing route. It is a simple getter/setter object that can easily be expanded.
  *
  * @author Gabriel Ruffo
- * @version 1.2
- * @since 07/19/2017
  */
 class Route implements Serializable {
     private String name;

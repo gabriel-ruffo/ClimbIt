@@ -28,8 +28,6 @@ import java.util.List;
  * All other activities are reachable from this screen.
  *
  * @author Gabriel Ruffo
- * @version 1.7
- * @since 07/25/2017
  */
 public class MainScreen extends AppCompatActivity {
     // string to store extra strings to pass on to other activities

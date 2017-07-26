@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
 import java.io.File;
@@ -25,7 +27,7 @@ import java.util.Locale;
 
 /**
  * AddNewRouteActivity.java
- * Purpose: This class adds a new route to the main route file. It presents the user with a form
+ * Purpose: This class adds a new route to the SQLite database. It presents the user with a form
  * format view, allowing the user to enter all information pertaining to a route.
  *
  * @author Gabriel Ruffo
@@ -33,6 +35,9 @@ import java.util.Locale;
 public class AddNewRouteActivity extends AppCompatActivity {
     private final Calendar calendar = Calendar.getInstance();
     private FeedReaderContract.FeedReaderDbHelper mDbHelper;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,9 +163,6 @@ public class AddNewRouteActivity extends AppCompatActivity {
                 route.getRating(), route.getFeltLike(), route.getLocation());
     }
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    private String mCurrentPhotoPath;
-
     /**
      * This method starts the process of taking/saving a picture. This does so by creating an
      * ACTION_IMAGE_CAPTURE intent.
@@ -208,6 +210,9 @@ public class AddNewRouteActivity extends AppCompatActivity {
         return image;
     }
 
+
+    private boolean isImageFitToScreen = false;
+
     /**
      * This method, based on the success of the picture taking activity, grabs the image and
      * places it into the ImageView on the screen.
@@ -219,7 +224,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            ImageView mImageView = (ImageView) findViewById(R.id.imageView);
+            final ImageView mImageView = (ImageView) findViewById(R.id.imageView);
 
             int targetW = mImageView.getWidth();
             int targetH = mImageView.getHeight();
@@ -237,6 +242,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
 
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
+            // flip the picture from landscape to portrait
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);

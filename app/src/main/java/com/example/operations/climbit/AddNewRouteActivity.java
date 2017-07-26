@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,7 +33,7 @@ import java.util.Locale;
  * @since 07/25/2017
  */
 public class AddNewRouteActivity extends AppCompatActivity {
-    final Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     private FeedReaderContract.FeedReaderDbHelper mDbHelper;
 
     @Override
@@ -40,6 +41,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_route);
 
+        mDbHelper = new FeedReaderContract.FeedReaderDbHelper(getApplicationContext());
         // create an OnDateSetListener for the start date
         final DatePickerDialog.OnDateSetListener start_date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -148,13 +150,12 @@ public class AddNewRouteActivity extends AppCompatActivity {
 
 
         // new way of doing things. get outta here old man, the future is now
-        mDbHelper = new FeedReaderContract.FeedReaderDbHelper(getApplicationContext());
-        saveState(mDbHelper, route);
+        insertNewRoute(mDbHelper, route);
 
         startActivity(intent);
     }
 
-    private void saveState(FeedReaderContract.FeedReaderDbHelper mDbHelper, Route route) {
+    private void insertNewRoute(FeedReaderContract.FeedReaderDbHelper mDbHelper, Route route) {
         mDbHelper.insertNewRoute(route.getName(), route.getGrade(), route.getSetter(), route.getStart(), route.getFinish(),
                 route.getRating(), route.getFeltLike(), route.getLocation());
     }
@@ -238,8 +239,11 @@ public class AddNewRouteActivity extends AppCompatActivity {
 
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
-            mImageView.setImageBitmap(bitmap);
+            mImageView.setImageBitmap(rotatedBitmap);
         }
     }
 }

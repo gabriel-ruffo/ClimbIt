@@ -32,7 +32,7 @@ public class EditScreen extends AppCompatActivity {
     // route_vals[8] = route #
     private String[] route_vals;
 
-    final Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     private FeedReaderContract.FeedReaderDbHelper mDbHelper;
 
     @Override
@@ -152,7 +152,6 @@ public class EditScreen extends AppCompatActivity {
      */
     public void updateRouteInformation(View view) {
         Intent intent = new Intent(this, MainScreen.class);
-
         SQLiteDatabase db_writer = mDbHelper.getWritableDatabase();
 
         ContentValues values = putUpdatedValues();

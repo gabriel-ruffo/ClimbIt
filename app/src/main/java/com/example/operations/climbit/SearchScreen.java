@@ -103,7 +103,8 @@ public class SearchScreen extends AppCompatActivity {
                     cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_FINISH)),
                     cursor.getFloat(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_RATING)),
                     cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_FELT_LIKE)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_LOCATION)));
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_LOCATION)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_IMAGE)));
             routes.add(temp);
         }
 
@@ -186,6 +187,7 @@ public class SearchScreen extends AppCompatActivity {
      * @return A new TextView with LayoutParams and OnClickListener
      */
     private TextView getNewTextView(final Route current_route, final int route_position) {
+        // TODO: implement an ImageView to show Route's image
         // initialize the temporary TextView and set its layout parameters
         TextView temp = new TextView(this);
         temp.setLayoutParams(new LinearLayout.LayoutParams(

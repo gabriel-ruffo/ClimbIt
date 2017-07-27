@@ -129,7 +129,8 @@ public class MainScreen extends AppCompatActivity {
                     cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_FINISH)),
                     cursor.getFloat(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_RATING)),
                     cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_FELT_LIKE)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_LOCATION)));
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_LOCATION)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedReaderContract.FeedEntry.COLUMN_NAME_IMAGE)));
             routes.add(temp);
         }
 
@@ -159,6 +160,7 @@ public class MainScreen extends AppCompatActivity {
             TextView route_textView = getNewTextView(routes_list.get(i), i);
 
             // set the text to the routes' names
+            //TODO: Extract and set image from filepath to imageView
             route_textView.setText("Name: " + routes_list.get(i).getName() + "\r\n" +
                     "Grade: " + routes_list.get(i).getGrade() + "\r\n" +
                     "Setter: " + routes_list.get(i).getSetter() + "\r\n" +
@@ -187,6 +189,7 @@ public class MainScreen extends AppCompatActivity {
      * @return A new TextView with LayoutParams and OnClickListener
      */
     private TextView getNewTextView(final Route current_route, final int route_position) {
+        // TODO: implement an ImageView to show Route's image
         // initialize a temporary TextView with LayoutParams
         TextView temp = new TextView(this);
         temp.setLayoutParams(new LinearLayout.LayoutParams(
@@ -206,7 +209,7 @@ public class MainScreen extends AppCompatActivity {
                         + current_route.getSetter() + ";" + current_route.getStart() + ";"
                         + current_route.getFinish() + ";" + current_route.getRating() + ";"
                         + current_route.getFeltLike() + ";" + current_route.getLocation() + ";"
-                        + route_position;
+                        + route_position + ";" + current_route.getImage();
                 intent.putExtra(EXTRA_MESSAGE, route_values);
                 startActivity(intent);
             }

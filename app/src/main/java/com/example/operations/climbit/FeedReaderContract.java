@@ -20,6 +20,7 @@ final class FeedReaderContract {
         static final String COLUMN_NAME_RATING = "rating";
         static final String COLUMN_NAME_FELT_LIKE = "felt_like";
         static final String COLUMN_NAME_LOCATION = "location";
+        static final String COLUMN_NAME_IMAGE = "image";
     }
 
     private static final String SQL_CREATE_ENTRIES =
@@ -32,7 +33,8 @@ final class FeedReaderContract {
                     FeedEntry.COLUMN_NAME_FINISH + " TEXT," +
                     FeedEntry.COLUMN_NAME_RATING + " TEXT," +
                     FeedEntry.COLUMN_NAME_FELT_LIKE + " TEXT," +
-                    FeedEntry.COLUMN_NAME_LOCATION + " TEXT)";
+                    FeedEntry.COLUMN_NAME_LOCATION + " TEXT," +
+                    FeedEntry.COLUMN_NAME_IMAGE + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
@@ -58,6 +60,11 @@ final class FeedReaderContract {
             onCreate(db);
         }
 
+        public void remakeDB(SQLiteDatabase db) {
+            db.execSQL(SQL_DELETE_ENTRIES);
+            db.execSQL(SQL_CREATE_ENTRIES);
+        }
+
         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onUpgrade(db, oldVersion, newVersion);
         }
@@ -77,7 +84,7 @@ final class FeedReaderContract {
          * @return The result code of the insert transaction.
          */
         long insertNewRoute(String name, String grade, String setter, String start,
-                            String finish, float rating, String felt_like, String location) {
+                            String finish, float rating, String felt_like, String location, String image) {
             ContentValues values = new ContentValues();
             values.put(FeedEntry.COLUMN_NAME_NAME, name);
             values.put(FeedEntry.COLUMN_NAME_GRADE, grade);
@@ -87,6 +94,7 @@ final class FeedReaderContract {
             values.put(FeedEntry.COLUMN_NAME_RATING, rating);
             values.put(FeedEntry.COLUMN_NAME_FELT_LIKE, felt_like);
             values.put(FeedEntry.COLUMN_NAME_LOCATION, location);
+            values.put(FeedEntry.COLUMN_NAME_IMAGE, image);
 
             return db_writer.insert(FeedEntry.TABLE_NAME, null, values);
         }

@@ -27,7 +27,6 @@ import java.util.Locale;
  * @author Gabriel Ruffo
  */
 public class EditScreen extends AppCompatActivity {
-    // route_vals[8] = route #
     private String[] route_vals;
 
     private final Calendar calendar = Calendar.getInstance();
@@ -122,6 +121,7 @@ public class EditScreen extends AppCompatActivity {
      * This method updates the empty views with the route in question wanting to be edited.
      */
     private void updateViewsFields() {
+        // TODO: Update an ImageView with Route's image
         EditText name = (EditText) findViewById(R.id.name_editText);
         EditText grade = (EditText) findViewById(R.id.grade_editText);
         EditText setter = (EditText) findViewById(R.id.setter_editText);
@@ -139,6 +139,7 @@ public class EditScreen extends AppCompatActivity {
         rating.setRating(Float.parseFloat(route_vals[5]));
         feltLike.setText(route_vals[6]);
         location.setText(route_vals[7]);
+        String image = route_vals[8];
     }
 
     /**
@@ -149,6 +150,8 @@ public class EditScreen extends AppCompatActivity {
      * @param view Button view calling this method.
      */
     public void updateRouteInformation(View view) {
+        // TODO: implement image taking/saving functionality from AddNewRouteActivity
+        // TODO: it will be very similar...
         Intent intent = new Intent(this, MainScreen.class);
         SQLiteDatabase db_writer = mDbHelper.getWritableDatabase();
 
@@ -181,6 +184,7 @@ public class EditScreen extends AppCompatActivity {
     }
 
     private ContentValues putUpdatedValues() {
+        // TODO: implement image... same as mCurrentImagePath
         ContentValues temp = new ContentValues();
 
         EditText name = (EditText) findViewById(R.id.name_editText);
@@ -205,6 +209,7 @@ public class EditScreen extends AppCompatActivity {
     }
 
     public void deleteRoute(View view) {
+        // TODO: remember to delete the image through its filepath
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -228,6 +233,7 @@ public class EditScreen extends AppCompatActivity {
     }
 
     private void deleteRouteFromDB() {
+        // TODO: implement image
         SQLiteDatabase db_writer = mDbHelper.getWritableDatabase();
         String selection = FeedReaderContract.FeedEntry.COLUMN_NAME_NAME + " = ? AND " +
                 FeedReaderContract.FeedEntry.COLUMN_NAME_GRADE + " = ? AND " +

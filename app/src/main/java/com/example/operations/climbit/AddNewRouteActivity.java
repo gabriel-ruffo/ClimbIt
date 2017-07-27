@@ -156,7 +156,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
         Route route = new Route(name.getText().toString(), grade.getText().toString(),
                 setter.getText().toString(), start.getText().toString(),
                 finish.getText().toString(), rating, feltLike.getText().toString(),
-                location.getText().toString());
+                location.getText().toString(), mCurrentPhotoPath);
 
 
         // new way of doing things. get outta here old man, the future is now
@@ -168,7 +168,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
 
     private void insertNewRoute(FeedReaderContract.FeedReaderDbHelper mDbHelper, Route route) {
         mDbHelper.insertNewRoute(route.getName(), route.getGrade(), route.getSetter(), route.getStart(), route.getFinish(),
-                route.getRating(), route.getFeltLike(), route.getLocation());
+                route.getRating(), route.getFeltLike(), route.getLocation(), route.getImage());
     }
 
     /**

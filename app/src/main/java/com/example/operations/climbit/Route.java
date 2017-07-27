@@ -18,9 +18,10 @@ class Route implements Serializable {
     private float rating;
     private String feltLike;
     private String location;
+    private String image;
 
     Route(String name, String grade, String setter, String start,
-          String finish, float rating, String feltLike, String location) {
+          String finish, float rating, String feltLike, String location, String image) {
         this.name = name;
         this.grade = grade;
         this.setter = setter;
@@ -29,6 +30,7 @@ class Route implements Serializable {
         this.rating = rating;
         this.feltLike = feltLike;
         this.location = location;
+        this.image = image;
     }
 
     public String getName() {
@@ -93,5 +95,13 @@ class Route implements Serializable {
 
     void setLocation(String location) {
         this.location = location;
+    }
+
+    String getImage() {
+        return image;
+    }
+
+    void setImage(String image) {
+        this.image = image;
     }
 }

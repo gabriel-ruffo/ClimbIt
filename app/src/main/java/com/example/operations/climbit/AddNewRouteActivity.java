@@ -98,6 +98,12 @@ public class AddNewRouteActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mDbHelper.close();
+        if (!mCurrentPhotoPath.isEmpty()) {
+            File old_file = new File(mCurrentPhotoPath);
+            if (old_file.exists()) {
+                old_file.delete();
+            }
+        }
         super.onDestroy();
     }
 

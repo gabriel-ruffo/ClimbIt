@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.hardware.Camera;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,10 +15,11 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +38,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
     private FeedReaderContract.FeedReaderDbHelper mDbHelper;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private String mCurrentPhotoPath;
+    private String mCurrentPhotoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +155,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
 
         // new way of doing things. get outta here old man, the future is now
         insertNewRoute(mDbHelper, route);
+        //saveCurrentImage();
 
         startActivity(intent);
     }
@@ -187,6 +189,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * This method creates a unique file to store the image taken by the user. This does so
      * by setting its name to a timestamp of when the picture was taken, and putting it into
@@ -196,6 +199,12 @@ public class AddNewRouteActivity extends AppCompatActivity {
      * @throws IOException Error occurred when trying to create file.
      */
     private File createImageFile() throws IOException {
+        if (!mCurrentPhotoPath.isEmpty()) {
+            File old_file = new File(mCurrentPhotoPath);
+            if (old_file.exists()) {
+                old_file.delete();
+            }
+        }
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -209,9 +218,6 @@ public class AddNewRouteActivity extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
-
-    private boolean isImageFitToScreen = false;
 
     /**
      * This method, based on the success of the picture taking activity, grabs the image and

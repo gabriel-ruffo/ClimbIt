@@ -6,11 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-/**
- * @version 1.0
- *          Created by Operations on 7/24/2017.
- */
-
 final class FeedReaderContract {
     private FeedReaderContract() {
     }
@@ -44,9 +39,9 @@ final class FeedReaderContract {
 
     static class FeedReaderDbHelper extends SQLiteOpenHelper {
         // If you change the database schema, you must increment the database version.
-        public static final int DATABASE_VERSION = 1;
-        public static final String DATABASE_NAME = "ClimbIt.db";
-        public final SQLiteDatabase db_writer = this.getWritableDatabase();
+        static final int DATABASE_VERSION = 1;
+        static final String DATABASE_NAME = "ClimbIt.db";
+        final SQLiteDatabase db_writer = this.getWritableDatabase();
 
         FeedReaderDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);

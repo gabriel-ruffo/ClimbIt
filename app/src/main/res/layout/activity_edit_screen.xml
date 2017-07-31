@@ -46,6 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.03"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingTop="7dp">
 
@@ -56,6 +57,22 @@
                     android:layout_weight="1"
                     android:text="@string/picture_tab"
                     android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="77dp"
+                    android:layout_height="58dp"
+                    android:layout_weight="0.22"
+                    android:contentDescription="@string/picture_tab"
+                    app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/upload_pic_button"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
 
             </LinearLayout>
 

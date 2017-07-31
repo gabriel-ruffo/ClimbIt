@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -164,8 +166,11 @@ public class AddNewRouteActivity extends AppCompatActivity {
     }
 
     private void insertNewRoute(FeedReaderContract.FeedReaderDbHelper mDbHelper, Route route) {
-        mDbHelper.insertNewRoute(route.getName(), route.getGrade(), route.getSetter(), route.getStart(), route.getFinish(),
+        long result = mDbHelper.insertNewRoute(route.getName(), route.getGrade(), route.getSetter(), route.getStart(), route.getFinish(),
                 route.getRating(), route.getFeltLike(), route.getLocation(), route.getImage());
+        if (result == -1) {
+            Log.d("ERROR", "DATABASE INSERT WAS UNSUCCESSFUL");
+        }
     }
 
     /**

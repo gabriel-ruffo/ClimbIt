@@ -126,63 +126,70 @@ public class SearchScreen extends AppCompatActivity {
 
         // check if the search brought up no results
         if (searchList.size() == 0) {
-            // initialize a temporary LinearLayout
-            LinearLayout temp_layout = new LinearLayout(this);
-
-            // set up the orientation and layout parameters
-            temp_layout.setOrientation(LinearLayout.HORIZONTAL);
-            temp_layout.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
-
-            // create a TextView for the case where no routes were found
-            TextView no_routes = new TextView(this);
-            no_routes.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
-            no_routes.setText("No routes matching that parameter!");
-
-            // add the TextView to the temporary layout
-            temp_layout.addView(no_routes);
-            // add the temporary layout to the wrapper layout
-            layout_wrapper.addView(temp_layout);
+            setUpNoRoutesView(layout_wrapper);
         }
 
         // routes were found
         for (int i = 0; i < searchList.size(); i++) {
-            // initialize a temporary LinearLayout to house the route information
-            LinearLayout temp_layout = new LinearLayout(this);
-
-            // set the orientation and layout parameters
-            temp_layout.setOrientation(LinearLayout.HORIZONTAL);
-            temp_layout.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
-
-            // create a new TextView with basic information about the routes
-            TextView route_textView = getNewTextView(searchList.get(i));
-            route_textView.setText("Name: " + searchList.get(i).getName() + "\r\n" +
-                    "Grade: " + searchList.get(i).getGrade() + "\r\n" +
-                    "Rating: " + searchList.get(i).getRating() + "\r\n" +
-                    "Location: " + searchList.get(i).getLocation() + "\r\n");
-            route_textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-
-            // add the text view to the temporary layout
-            temp_layout.addView(route_textView);
-            // add the temporary layout to the wrapper layout
-            layout_wrapper.addView(temp_layout);
+            setUpAndAddRouteToLayout(searchList, layout_wrapper, i);
         }
     }
 
+    private void setUpNoRoutesView(LinearLayout layout_wrapper) {
+        // initialize a temporary LinearLayout
+        LinearLayout temp_layout = new LinearLayout(this);
+
+        // set up the orientation and layout parameters
+        temp_layout.setOrientation(LinearLayout.HORIZONTAL);
+        temp_layout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+
+        // create a TextView for the case where no routes were found
+        TextView no_routes = new TextView(this);
+        no_routes.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        no_routes.setText("No routes matching that parameter!");
+
+        // add the TextView to the temporary layout
+        temp_layout.addView(no_routes);
+        // add the temporary layout to the wrapper layout
+        layout_wrapper.addView(temp_layout);
+    }
+
+    private void setUpAndAddRouteToLayout(List<Route> searchList, LinearLayout layout_wrapper, int i) {
+        // initialize a temporary LinearLayout to house the route information
+        LinearLayout temp_layout = new LinearLayout(this);
+
+        // set the orientation and layout parameters
+        temp_layout.setOrientation(LinearLayout.HORIZONTAL);
+        temp_layout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+
+        // create a new TextView with basic information about the routes
+        TextView route_textView = getNewTextView(searchList.get(i));
+        route_textView.setText("Name: " + searchList.get(i).getName() + "\r\n" +
+                "Grade: " + searchList.get(i).getGrade() + "\r\n" +
+                "Rating: " + searchList.get(i).getRating() + "\r\n" +
+                "Location: " + searchList.get(i).getLocation() + "\r\n");
+        route_textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+
+        // add the text view to the temporary layout
+        temp_layout.addView(route_textView);
+        // add the temporary layout to the wrapper layout
+        layout_wrapper.addView(temp_layout);
+    }
     /**
      * Creates a TextView with the right LayoutParams and allows it to be clickable. A click
      * listener is attached such that when it is clicked, the EditScreen is brought up containing
      * the information stored in that TextView as an extra message.
      *
-     * @param current_route  The route currently being looked at
+     * @param current_route The route currently being looked at
      * @return A new TextView with LayoutParams and OnClickListener
      */
     private TextView getNewTextView(final Route current_route) {

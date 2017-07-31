@@ -43,7 +43,7 @@ public class EditScreen extends AppCompatActivity {
         // grab the route being passed
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainScreen.EXTRA_MESSAGE);
-        route_vals = message.split(";");
+        route_vals = message.split(";", 9);
 
         // listener to update the start_date_editText whenever a date is chosen from the DatePicker
         final DatePickerDialog.OnDateSetListener start_date = new DatePickerDialog.OnDateSetListener() {

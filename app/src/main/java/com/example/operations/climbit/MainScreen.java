@@ -93,6 +93,9 @@ public class MainScreen extends AppCompatActivity {
     private void updateProjectsView() {
         SQLiteDatabase db_reader = mDbHelper.getReadableDatabase();
 
+        // uncomment to remake the database
+        // mDbHelper.remakeDB(db_reader);
+
         Cursor cursor = db_reader.rawQuery("SELECT * FROM " + FeedReaderContract.FeedEntry.TABLE_NAME, null);
         List<Route> routes_from_query = populateList(cursor);
 
@@ -161,10 +164,9 @@ public class MainScreen extends AppCompatActivity {
             ));
 
             // create a temporary text view
-            TextView route_textView = getNewTextView(routes_list.get(i), i);
+            TextView route_textView = getNewTextView(routes_list.get(i));
 
             // set the text to the routes' names
-            //TODO: Extract and set image from filepath to imageView
             route_textView.setText("Name: " + routes_list.get(i).getName() + "\r\n" +
                     "Grade: " + routes_list.get(i).getGrade() + "\r\n" +
                     "Setter: " + routes_list.get(i).getSetter() + "\r\n" +
@@ -211,11 +213,9 @@ public class MainScreen extends AppCompatActivity {
      * the information stored in that TextView as an extra message.
      *
      * @param current_route  The route currently being looked at
-     * @param route_position The index of the route in the storage file
      * @return A new TextView with LayoutParams and OnClickListener
      */
-    private TextView getNewTextView(final Route current_route, final int route_position) {
-        // TODO: implement an ImageView to show Route's image
+    private TextView getNewTextView(final Route current_route) {
         // initialize a temporary TextView with LayoutParams
         TextView temp = new TextView(this);
         temp.setLayoutParams(new LinearLayout.LayoutParams(

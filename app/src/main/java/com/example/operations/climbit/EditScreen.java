@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -233,7 +234,6 @@ public class EditScreen extends AppCompatActivity {
     }
 
     private void deleteRouteFromDB() {
-        // TODO: implement image
         SQLiteDatabase db_writer = mDbHelper.getWritableDatabase();
         String selection = FeedReaderContract.FeedEntry.COLUMN_NAME_NAME + " = ? AND " +
                 FeedReaderContract.FeedEntry.COLUMN_NAME_GRADE + " = ? AND " +
@@ -249,5 +249,13 @@ public class EditScreen extends AppCompatActivity {
                 route_vals[6], route_vals[7]};
 
         db_writer.delete(FeedReaderContract.FeedEntry.TABLE_NAME, selection, selectionArgs);
+
+        // delete associated picture from storage
+        if (!route_vals[8].isEmpty()) {
+            File old_file = new File(route_vals[8]);
+            if (old_file.exists()) {
+                old_file.delete();
+            }
+        }
     }
 }

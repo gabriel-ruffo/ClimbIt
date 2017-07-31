@@ -3,6 +3,9 @@ package com.example.operations.climbit;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -11,6 +14,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -171,6 +175,28 @@ public class MainScreen extends AppCompatActivity {
                     "Location: " + routes_list.get(i).getLocation() + "\r\n");
             route_textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
+            // set up a new ImageView with the Route's image
+            String image_path = routes_list.get(i).getImage();
+
+            if (!image_path.isEmpty()) {
+                ImageView route_image = new ImageView(this);
+                route_image.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                ));
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeFile(image_path, options);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 420, 350, true);
+
+                Matrix matrix = new Matrix();
+                matrix.postRotate(90);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+                route_image.setImageBitmap(rotatedBitmap);
+                temp_layout.addView(route_image);
+            }
+
             // add the view to the temporary linear layout
             temp_layout.addView(route_textView);
 
@@ -209,7 +235,7 @@ public class MainScreen extends AppCompatActivity {
                         + current_route.getSetter() + ";" + current_route.getStart() + ";"
                         + current_route.getFinish() + ";" + current_route.getRating() + ";"
                         + current_route.getFeltLike() + ";" + current_route.getLocation() + ";"
-                        + route_position + ";" + current_route.getImage();
+                        + current_route.getImage();
                 intent.putExtra(EXTRA_MESSAGE, route_values);
                 startActivity(intent);
             }

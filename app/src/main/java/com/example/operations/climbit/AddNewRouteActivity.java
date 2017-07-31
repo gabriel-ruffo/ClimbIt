@@ -45,7 +45,7 @@ public class AddNewRouteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_route);
 
         mDbHelper = new FeedReaderContract.FeedReaderDbHelper(getApplicationContext());
-        // create an OnDateSetListener for the start date
+        // create onDateSetListeners
         final DatePickerDialog.OnDateSetListener start_date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -56,16 +56,6 @@ public class AddNewRouteActivity extends AppCompatActivity {
             }
         };
 
-        // create an OnClickListener to the start date DatePicker
-        View.OnClickListener start_onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(AddNewRouteActivity.this, start_date, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        };
-
-        // create an OnDateSetListener for the finish date
         final DatePickerDialog.OnDateSetListener finish_date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -76,14 +66,11 @@ public class AddNewRouteActivity extends AppCompatActivity {
             }
         };
 
+        // create an OnClickListener to the start date DatePicker
+        View.OnClickListener start_onClickListener = getOnClickListener(start_date);
+
         // create an OnClickListener to the finish date DatePicker
-        View.OnClickListener finish_onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(AddNewRouteActivity.this, finish_date, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        };
+        View.OnClickListener finish_onClickListener = getOnClickListener(finish_date);
 
         // find the start and finish date EditTexts
         EditText start_date_editText = (EditText) findViewById(R.id.start_date_editText);
@@ -104,6 +91,16 @@ public class AddNewRouteActivity extends AppCompatActivity {
             }
         }
         super.onDestroy();
+    }
+
+    private View.OnClickListener getOnClickListener(final DatePickerDialog.OnDateSetListener dateSetListener) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(AddNewRouteActivity.this, dateSetListener, calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        };
     }
 
     /**

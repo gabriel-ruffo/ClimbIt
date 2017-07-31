@@ -45,7 +45,7 @@ public class EditScreen extends AppCompatActivity {
         String message = intent.getStringExtra(MainScreen.EXTRA_MESSAGE);
         route_vals = message.split(";", 9);
 
-        // listener to update the start_date_editText whenever a date is chosen from the DatePicker
+        // listeners to update the EditTexts whenever a date is chosen from the DatePicker
         final DatePickerDialog.OnDateSetListener start_date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -56,16 +56,6 @@ public class EditScreen extends AppCompatActivity {
             }
         };
 
-        // click listener on the start_date_editText to open a DatePicker
-        View.OnClickListener start_onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(EditScreen.this, start_date, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        };
-
-        // listener to update the finish_date_editText whenever a date is chosen from the DatePicker
         final DatePickerDialog.OnDateSetListener finish_date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -76,14 +66,11 @@ public class EditScreen extends AppCompatActivity {
             }
         };
 
+        // click listener on the start_date_editText to open a DatePicker
+        View.OnClickListener start_onClickListener = getOnClickListener(start_date);
+
         // click listener on the finish_date_editText to open a DatePicker
-        View.OnClickListener finish_onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(EditScreen.this, finish_date, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        };
+        View.OnClickListener finish_onClickListener = getOnClickListener(finish_date);
 
         // attach the listeners to the date_editTexts
         EditText start_date_editText = (EditText) findViewById(R.id.start_date_editText);
@@ -94,6 +81,16 @@ public class EditScreen extends AppCompatActivity {
 
         // update the fields of the views
         updateViewsFields();
+    }
+
+    private View.OnClickListener getOnClickListener(final DatePickerDialog.OnDateSetListener dateSetListener) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(EditScreen.this, dateSetListener, calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        };
     }
 
     /**

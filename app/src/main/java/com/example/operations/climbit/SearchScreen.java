@@ -163,7 +163,7 @@ public class SearchScreen extends AppCompatActivity {
             ));
 
             // create a new TextView with basic information about the routes
-            TextView route_textView = getNewTextView(searchList.get(i), i);
+            TextView route_textView = getNewTextView(searchList.get(i));
             route_textView.setText("Name: " + searchList.get(i).getName() + "\r\n" +
                     "Grade: " + searchList.get(i).getGrade() + "\r\n" +
                     "Rating: " + searchList.get(i).getRating() + "\r\n" +
@@ -183,11 +183,9 @@ public class SearchScreen extends AppCompatActivity {
      * the information stored in that TextView as an extra message.
      *
      * @param current_route  The route currently being looked at
-     * @param route_position The index of the route in the storage file
      * @return A new TextView with LayoutParams and OnClickListener
      */
-    private TextView getNewTextView(final Route current_route, final int route_position) {
-        // TODO: implement an ImageView to show Route's image
+    private TextView getNewTextView(final Route current_route) {
         // initialize the temporary TextView and set its layout parameters
         TextView temp = new TextView(this);
         temp.setLayoutParams(new LinearLayout.LayoutParams(
@@ -206,7 +204,7 @@ public class SearchScreen extends AppCompatActivity {
                         + current_route.getSetter() + ";" + current_route.getStart() + ";"
                         + current_route.getFinish() + ";" + current_route.getRating() + ";"
                         + current_route.getFeltLike() + ";" + current_route.getLocation() + ";"
-                        + route_position;
+                        + current_route.getImage();
                 intent.putExtra(EXTRA_MESSAGE, route_values);
                 startActivity(intent);
             }

@@ -184,6 +184,7 @@ public class SearchScreen extends AppCompatActivity {
         // add the temporary layout to the wrapper layout
         layout_wrapper.addView(temp_layout);
     }
+
     /**
      * Creates a TextView with the right LayoutParams and allows it to be clickable. A click
      * listener is attached such that when it is clicked, the EditScreen is brought up containing

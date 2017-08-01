@@ -8,6 +8,9 @@
     <string name="grade_radio">Grade</string>
     <string name="rating_radio">Rating</string>
     <string name="setter_radio">Setter</string>
+    <string name="settings_button">Settings</string>
+    <string name="delete_all_tab">Delete all routes:</string>
+    <string name="delete_all_button">DELETE</string>
 
     <!-- Strings for adding a route screen -->
     <string name="add_route_header">Add a new route!</string>

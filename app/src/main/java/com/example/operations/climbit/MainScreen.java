@@ -47,7 +47,19 @@ public class MainScreen extends AppCompatActivity {
         mDbHelper = new FeedReaderContract.FeedReaderDbHelper(getApplicationContext());
 
         updateProjectsView();
+        setUpSearchFunctionality();
+    }
 
+    /**
+     * This updates the projects div whenever you come back to the main page.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateProjectsView();
+    }
+
+    private void setUpSearchFunctionality() {
         // Set up the search functionality
         final Button button = (Button) findViewById(R.id.search_button);
         EditText searchField = (EditText) findViewById(R.id.search_text_box);
@@ -77,22 +89,12 @@ public class MainScreen extends AppCompatActivity {
     }
 
     /**
-     * This updates the projects div whenever you come back to the main page.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateProjectsView();
-    }
-
-    /**
      * This refreshes the ProjectsView on the MainScreen. This does so by opening the routes
      * storage file, grabbing all routes - if there are some - and repopulating the view with
      * the routes. If there are no routes, then it appends a TextView explaining so.
      */
     private void updateProjectsView() {
         SQLiteDatabase db_reader = mDbHelper.getReadableDatabase();
-
         // uncomment to remake the database
         // mDbHelper.remakeDB(db_reader);
 
@@ -212,7 +214,7 @@ public class MainScreen extends AppCompatActivity {
      * listener is attached such that when it is clicked, the EditScreen is brought up containing
      * the information stored in that TextView as an extra message.
      *
-     * @param current_route  The route currently being looked at
+     * @param current_route The route currently being looked at
      * @return A new TextView with LayoutParams and OnClickListener
      */
     private TextView getNewTextView(final Route current_route) {
@@ -293,6 +295,11 @@ public class MainScreen extends AppCompatActivity {
         // put all strings into a message and send with intent
         String message = radioStr + ";" + searchStr;
         intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
+
+    public void goToSettingsPage(View view) {
+        Intent intent = new Intent(this, SettingsScreen.class);
         startActivity(intent);
     }
 }

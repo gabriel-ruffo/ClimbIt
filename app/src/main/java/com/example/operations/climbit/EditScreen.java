@@ -243,6 +243,13 @@ public class EditScreen extends AppCompatActivity {
             Log.d("E", "ERROR Updating rows.");
         }
 
+        if (!route_vals[8].isEmpty()) {
+            File old_file = new File(route_vals[8]);
+            if (old_file.exists()) {
+                old_file.delete();
+            }
+        }
+
         startActivity(intent);
     }
 

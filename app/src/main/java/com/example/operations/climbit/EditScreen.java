@@ -5,13 +5,20 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 
 import java.io.File;
@@ -82,6 +89,19 @@ public class EditScreen extends AppCompatActivity {
 
         // update the fields of the views
         updateViewsFields();
+
+        // update the ImageView AFTER the layout has been set
+        ImageView imageView = (ImageView) findViewById(R.id.route_imageView);
+        ViewTreeObserver viewTreeObserver = imageView.getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                String image_path = route_vals[8];
+                if (!image_path.isEmpty()) {
+                    updateViewWithImage(image_path);
+                }
+            }
+        });
     }
 
     private View.OnClickListener getOnClickListener(final DatePickerDialog.OnDateSetListener dateSetListener) {
@@ -120,7 +140,6 @@ public class EditScreen extends AppCompatActivity {
      * This method updates the empty views with the route in question wanting to be edited.
      */
     private void updateViewsFields() {
-        // TODO: Update an ImageView with Route's image
         EditText name = (EditText) findViewById(R.id.name_editText);
         EditText grade = (EditText) findViewById(R.id.grade_editText);
         EditText setter = (EditText) findViewById(R.id.setter_editText);
@@ -138,7 +157,33 @@ public class EditScreen extends AppCompatActivity {
         rating.setRating(Float.parseFloat(route_vals[5]));
         feltLike.setText(route_vals[6]);
         location.setText(route_vals[7]);
-        String image = route_vals[8];
+
+        // image is set after the window has populated the views
+    }
+
+    private void updateViewWithImage(String image_path) {
+        final ImageView imageView = (ImageView) findViewById(R.id.route_imageView);
+
+        int targetW = imageView.getWidth();
+        int targetH = imageView.getHeight();
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(image_path, options);
+
+        int photoW = options.outWidth;
+        int photoH = options.outHeight;
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+        options.inJustDecodeBounds = false;
+        options.inSampleSize = scaleFactor;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(image_path, options);
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+        imageView.setImageBitmap(rotatedBitmap);
     }
 
     /**

@@ -3,11 +3,17 @@ package com.example.operations.climbit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
+/**
+ * SettingsScreen.java
+ * Purpose: This class contains the settings options for the user.
+ *
+ * @author Gabriel Ruffo
+ */
 public class SettingsScreen extends AppCompatActivity {
     private FeedReaderContract.FeedReaderDbHelper mDbHelper;
 
@@ -19,6 +25,18 @@ public class SettingsScreen extends AppCompatActivity {
         mDbHelper = new FeedReaderContract.FeedReaderDbHelper(getApplicationContext());
     }
 
+    @Override
+    protected void onDestroy() {
+        mDbHelper.close();
+        super.onDestroy();
+    }
+
+    /**
+     * This method checks to make sure if a user wants to delete all Routes,
+     * and if so, does so, and returns to the MainScreen.
+     *
+     * @param view Button pressed to delete all Routes.
+     */
     public void deleteAllRoutes(View view) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override

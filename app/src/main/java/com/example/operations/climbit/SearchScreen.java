@@ -33,6 +33,7 @@ public class SearchScreen extends AppCompatActivity {
 
         mDbHelper = new FeedReaderContract.FeedReaderDbHelper(getApplicationContext());
 
+        // grab the search values
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainScreen.EXTRA_MESSAGE);
         search_values = message.split(";");
@@ -92,6 +93,15 @@ public class SearchScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method uses the Cursor pointing at the results of the query
+     * that grabs all Routes in the database to populate a List with
+     * Routes.
+     *
+     * @param cursor Cursor pointing at results from query grabbing
+     *               all Routes.
+     * @return The results of the query in List<Route> form.
+     */
     private List<Route> populateList(Cursor cursor) {
         List<Route> routes = new ArrayList<>();
         while (cursor.moveToNext()) {
@@ -160,6 +170,16 @@ public class SearchScreen extends AppCompatActivity {
         layout_wrapper.addView(temp_layout);
     }
 
+    /**
+     * This method takes each Route within the list of Routes
+     * and sets up temporary LinearLayouts and TextViews to
+     * display their information.
+     *
+     * @param searchList     List of Routes from the search.
+     * @param layout_wrapper Wrapper LinearLayout in which to add
+     *                       Views.
+     * @param i              Current Route index.
+     */
     private void setUpAndAddRouteToLayout(List<Route> searchList, LinearLayout layout_wrapper, int i) {
         // initialize a temporary LinearLayout to house the route information
         LinearLayout temp_layout = new LinearLayout(this);

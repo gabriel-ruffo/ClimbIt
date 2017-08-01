@@ -45,63 +45,31 @@ class Route implements Serializable {
         return grade;
     }
 
-    void setGrade(String grade) {
-        this.grade = grade;
-    }
-
     String getSetter() {
         return setter;
-    }
-
-    void setSetter(String setter) {
-        this.setter = setter;
     }
 
     String getStart() {
         return start;
     }
 
-    void setStart(String start) {
-        this.start = start;
-    }
-
     String getFinish() {
         return finish;
-    }
-
-    void setFinish(String finish) {
-        this.finish = finish;
     }
 
     float getRating() {
         return rating;
     }
 
-    void setRating(float rating) {
-        this.rating = rating;
-    }
-
     String getFeltLike() {
         return feltLike;
-    }
-
-    void setFeltLike(String feltLike) {
-        this.feltLike = feltLike;
     }
 
     String getLocation() {
         return location;
     }
 
-    void setLocation(String location) {
-        this.location = location;
-    }
-
     String getImage() {
         return image;
-    }
-
-    void setImage(String image) {
-        this.image = image;
     }
 }

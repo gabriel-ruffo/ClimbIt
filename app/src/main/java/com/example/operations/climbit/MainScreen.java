@@ -59,6 +59,13 @@ public class MainScreen extends AppCompatActivity {
         updateProjectsView();
     }
 
+    /**
+     * This sets up the Button and EditText for the search functionality
+     * of the MainScreen. It initially sets the Button to false, and waits
+     * for the user to input text for it to be available. Otherwise,
+     * sending a search request with no text causes an error, and this just
+     * seems cleaner.
+     */
     private void setUpSearchFunctionality() {
         // Set up the search functionality
         final Button button = (Button) findViewById(R.id.search_button);
@@ -127,6 +134,15 @@ public class MainScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method uses the Cursor pointing at the results of the query
+     * that grabs all Routes in the database to populate a List with
+     * Routes.
+     *
+     * @param cursor Cursor pointing at results from query grabbing
+     *               all Routes.
+     * @return The results of the query in List<Route> form.
+     */
     private List<Route> populateList(Cursor cursor) {
         List<Route> routes = new ArrayList<>();
         while (cursor.moveToNext()) {
@@ -298,6 +314,11 @@ public class MainScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Simply creates an Intent to go to the {@link SettingsScreen}.
+     *
+     * @param view Settings Button clicked to go to the SettingsScreen.
+     */
     public void goToSettingsPage(View view) {
         Intent intent = new Intent(this, SettingsScreen.class);
         startActivity(intent);

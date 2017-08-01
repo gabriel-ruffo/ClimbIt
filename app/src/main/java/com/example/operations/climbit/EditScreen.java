@@ -122,6 +122,14 @@ public class EditScreen extends AppCompatActivity {
         super.onDestroy();
     }
 
+    /**
+     * This helper method takes an OnDateSetListener to create a new
+     * OnClickListener, and returns it.
+     *
+     * @param dateSetListener OnDateSetListener to create the OnClickListener.
+     * @return An OnClickListener with the defined
+     * OnDateSetListener.
+     */
     private View.OnClickListener getOnClickListener(final DatePickerDialog.OnDateSetListener dateSetListener) {
         return new View.OnClickListener() {
             @Override
@@ -179,6 +187,12 @@ public class EditScreen extends AppCompatActivity {
         // image is set after the window has populated the views
     }
 
+    /**
+     * This method takes the image path of the current Route,
+     * and sets its bitmap to the ImageView.
+     *
+     * @param image_path Path to the image of the current Route.
+     */
     private void updateViewWithImage(String image_path) {
         final ImageView imageView = (ImageView) findViewById(R.id.route_imageView);
 
@@ -250,6 +264,12 @@ public class EditScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * This method puts all the new* Route information into
+     * ContentValues to update the database later on.
+     *
+     * @return ContentValues containing Route information.
+     */
     private ContentValues putUpdatedValues() {
         ContentValues temp = new ContentValues();
 
@@ -275,6 +295,13 @@ public class EditScreen extends AppCompatActivity {
         return temp;
     }
 
+    /**
+     * This makes sure that the user wants to delete the
+     * current Route, and if so, calls a helper method to
+     * delete it.
+     *
+     * @param view Button pressed to delete the current Route.
+     */
     public void deleteRoute(View view) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -298,6 +325,11 @@ public class EditScreen extends AppCompatActivity {
                 .setNegativeButton("No", dialogClickListener).show();
     }
 
+    /**
+     * This method queries the database for the current Route,
+     * and makes a deletion call. It also deletes the image in
+     * the internal directory tied to the Route, if it exists.
+     */
     private void deleteRouteFromDB() {
         SQLiteDatabase db_writer = mDbHelper.getWritableDatabase();
         String selection = FeedReaderContract.FeedEntry.COLUMN_NAME_NAME + " = ? AND " +
@@ -324,6 +356,12 @@ public class EditScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method starts the process of taking/saving a picture. This does so by creating an
+     * ACTION_IMAGE_CAPTURE intent.
+     *
+     * @param view Take picture button pressed to call this method.
+     */
     public void dispatchTakePictureEvent(View view) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -342,6 +380,14 @@ public class EditScreen extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method creates a unique file to store the image taken by the user. This does so
+     * by setting its name to a timestamp of when the picture was taken, and putting it into
+     * the pictures directory of the filesystem.
+     *
+     * @return Newly created file to hold the image.
+     * @throws IOException Error occurred when trying to create file.
+     */
     private File createImageFile() throws IOException {
         if (!mCurrentPhotoPath.isEmpty()) {
             File old_file = new File(mCurrentPhotoPath);
@@ -363,6 +409,14 @@ public class EditScreen extends AppCompatActivity {
         return image;
     }
 
+    /**
+     * This method, based on the success of the picture taking activity, grabs the image and
+     * places it into the ImageView on the screen.
+     *
+     * @param requestCode Code returned from the activity request.
+     * @param resultCode  Code of the result of the activity.
+     * @param data        The intent that initiated the activity.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

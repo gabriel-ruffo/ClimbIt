@@ -44,6 +44,29 @@ public class AddNewRouteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_route);
 
         mDbHelper = new FeedReaderContract.FeedReaderDbHelper(getApplicationContext());
+
+        setUpDatePickers();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mDbHelper.close();
+        if (!mCurrentPhotoPath.isEmpty()) {
+            File old_file = new File(mCurrentPhotoPath);
+            if (old_file.exists()) {
+                old_file.delete();
+            }
+        }
+        super.onDestroy();
+    }
+
+    /**
+     * This method sets up the functionality to click on a EditText to
+     * open up a date picker, and setting the text to the date picked.
+     * This does so through the use of OnClickListeners and
+     * OnDateSetListeners.
+     */
+    private void setUpDatePickers() {
         // create onDateSetListeners
         final DatePickerDialog.OnDateSetListener start_date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -80,18 +103,14 @@ public class AddNewRouteActivity extends AppCompatActivity {
         finish_date_editText.setOnClickListener(finish_onClickListener);
     }
 
-    @Override
-    protected void onDestroy() {
-        mDbHelper.close();
-        if (!mCurrentPhotoPath.isEmpty()) {
-            File old_file = new File(mCurrentPhotoPath);
-            if (old_file.exists()) {
-                old_file.delete();
-            }
-        }
-        super.onDestroy();
-    }
-
+    /**
+     * This helper method takes an OnDateSetListener to create a new
+     * OnClickListener, and returns it.
+     *
+     * @param dateSetListener OnDateSetListener to create the OnClickListener.
+     * @return An OnClickListener with the defined
+     * OnDateSetListener.
+     */
     private View.OnClickListener getOnClickListener(final DatePickerDialog.OnDateSetListener dateSetListener) {
         return new View.OnClickListener() {
             @Override
@@ -161,6 +180,15 @@ public class AddNewRouteActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * This method takes a database helper and a new Route, and inserts
+     * it to the database. If the result of the insert statement is -1,
+     * then an error occurred during the transaction, and an error log
+     * is written.
+     *
+     * @param mDbHelper A database helper to help inserting a new Route.
+     * @param route     The new Route to be inserted.
+     */
     private void insertNewRoute(FeedReaderContract.FeedReaderDbHelper mDbHelper, Route route) {
         long result = mDbHelper.insertNewRoute(route.getName(), route.getGrade(), route.getSetter(), route.getStart(), route.getFinish(),
                 route.getRating(), route.getFeltLike(), route.getLocation(), route.getImage());

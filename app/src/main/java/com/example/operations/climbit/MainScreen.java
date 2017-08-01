@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -102,8 +103,6 @@ public class MainScreen extends AppCompatActivity {
      */
     private void updateProjectsView() {
         SQLiteDatabase db_reader = mDbHelper.getReadableDatabase();
-        // uncomment to remake the database
-        // mDbHelper.remakeDB(db_reader);
 
         Cursor cursor = db_reader.rawQuery("SELECT * FROM " + FeedReaderContract.FeedEntry.TABLE_NAME, null);
         List<Route> routes_from_query = populateList(cursor);
@@ -176,10 +175,14 @@ public class MainScreen extends AppCompatActivity {
             LinearLayout temp_layout = new LinearLayout(this);
             temp_layout.setOrientation(LinearLayout.HORIZONTAL);
             // set view of linear layout to width: parent and height: wrap content
-            temp_layout.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
+            );
+            layoutParams.setMargins(0, 0, 0, 10);
+            temp_layout.setLayoutParams(layoutParams);
+
+            temp_layout.setBackgroundResource(R.drawable.customborder);
 
             // create a temporary text view
             TextView route_textView = getNewTextView(routes_list.get(i));
@@ -207,7 +210,7 @@ public class MainScreen extends AppCompatActivity {
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(image_path, options);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 420, 350, true);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 440, 320, true);
 
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);

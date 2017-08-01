@@ -172,10 +172,8 @@ public class AddNewRouteActivity extends AppCompatActivity {
                 finish.getText().toString(), rating, feltLike.getText().toString(),
                 location.getText().toString(), mCurrentPhotoPath);
 
-
         // new way of doing things. get outta here old man, the future is now
         insertNewRoute(mDbHelper, route);
-        //saveCurrentImage();
 
         startActivity(intent);
     }

@@ -1,18 +1,21 @@
 package com.example.operations.climbit;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -161,6 +164,8 @@ public class MainScreen extends AppCompatActivity {
         return routes;
     }
 
+    private boolean zoomOut = false;
+
     /**
      * This method takes the list of routes and the wrapper linear layout and adds them all
      * as children to the layout. This does so by creating horizontal layouts, adding text views,
@@ -202,7 +207,8 @@ public class MainScreen extends AppCompatActivity {
             String image_path = routes_list.get(i).getImage();
 
             if (!image_path.isEmpty()) {
-                ImageView route_image = new ImageView(this);
+                final ImageView route_image = new ImageView(this);
+
                 route_image.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT

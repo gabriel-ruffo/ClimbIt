@@ -210,7 +210,7 @@ public class MainScreen extends AppCompatActivity {
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 Bitmap bitmap = BitmapFactory.decodeFile(image_path, options);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 440, 320, true);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 450, 320, true);
 
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
@@ -246,9 +246,9 @@ public class MainScreen extends AppCompatActivity {
 
         // set up the TextView to be clickable and have a click listener
         temp.setClickable(true);
-        temp.setOnClickListener(new View.OnClickListener() {
+        temp.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 // send everything over to EditScreen
                 Intent intent = new Intent(MainScreen.this, EditScreen.class);
                 // grab the route's values and store them in an extra message
@@ -259,6 +259,7 @@ public class MainScreen extends AppCompatActivity {
                         + current_route.getImage();
                 intent.putExtra(EXTRA_MESSAGE, route_values);
                 startActivity(intent);
+                return false;
             }
         });
 

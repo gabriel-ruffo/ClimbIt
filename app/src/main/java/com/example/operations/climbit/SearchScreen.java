@@ -224,9 +224,9 @@ public class SearchScreen extends AppCompatActivity {
         // attach an OnClickListener to the TextView that will send the route and its information
         // to the EditScreen
         temp.setClickable(true);
-        temp.setOnClickListener(new View.OnClickListener() {
+        temp.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 Intent intent = new Intent(SearchScreen.this, EditScreen.class);
                 String route_values = current_route.getName() + ";" + current_route.getGrade() + ";"
                         + current_route.getSetter() + ";" + current_route.getStart() + ";"
@@ -235,6 +235,7 @@ public class SearchScreen extends AppCompatActivity {
                         + current_route.getImage();
                 intent.putExtra(EXTRA_MESSAGE, route_values);
                 startActivity(intent);
+                return false;
             }
         });
         return temp;

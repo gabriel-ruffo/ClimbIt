@@ -84,7 +84,6 @@ final class FeedReaderContract {
          * @param newVersion    n/a
          */
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
             db.execSQL(SQL_DELETE_ENTRIES);
             onCreate(db);
         }
